@@ -7,5 +7,9 @@ The first parameter is the recyclebin folder where to read from.
 ## Syntax
 
 ```
-./unrecycle.sh \$RECYCLE.BIN \$RECYCLE.BIN-recovery
+./unrecycle.sh inputfolder outputfolder
+```
+f.ex.
+```
+./unrecycle.sh /mnt/windowshd/\$RECYCLE.BIN /tmp/\$RECYCLE.BIN-recovery
 ```
