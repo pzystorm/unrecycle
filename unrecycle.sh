@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# set to 0 to activate changes
+# set to 0 to disable dryrun (i.e. script will perform the restore)
 onlydryrun=1
 
 # Check syntax
-if [[ -z "$1" ]] || [[ -z "$2" ]] || ! [[ -z "$3" ]] || [[ $# -ne 2 ]]; then
+if [[ -z "$1" ]] || [[ -z "$2" ]] || [[ $# -ne 2 ]]; then
   echo "Wrong syntax. Must be: ./unrecycle.sh inputfolder outputfolder"
   exit 1
 fi
