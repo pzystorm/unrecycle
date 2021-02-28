@@ -1,7 +1,7 @@
 #!/bin/bash
 
-recyclebin=$1
-outputpath=$2
+# set to 0 to activate changes
+onlydryrun=1
 
 # Check syntax
 if [[ -z "$1" ]] || [[ -z "$2" ]] || ! [[ -z "$3" ]] || [[ $# -ne 2 ]]; then
@@ -16,6 +16,9 @@ if ! [[ -d "$2" ]]; then
   echo "Output folder does not exist"
   exit 1
 fi
+
+recyclebin=$1
+outputpath=$2
 
 # Foreach file beginning with $I... 
 for ifile in "$recyclebin"/\$I*; do
@@ -36,15 +39,27 @@ for ifile in "$recyclebin"/\$I*; do
   fi
 
   # Create the folder that the file can be stored in
-  mkdir -p "$outputpath/$opath"
+  if [[ "$onlydryrun" != "0" ]]; then
+    echo "DRYRUN: mkdir -p \"$outputpath/$opath\""
+  else
+    mkdir -p "$outputpath/$opath"
+  fi
    
   # It is possible that two or more files/directories have been deleted with the same name and parent folder
   if [[ -e "$outputpath/$opath/$ofile" ]]; then
     echo "$outputpath/$opath/$ofile already exists. Please enter a new name:"
     echo -n "$outputpath/$opath/"
     read newname
-    cp -pr "$rfile" "$outputpath/$opath/$newname"
+    if [[ "$onlydryrun" != "0" ]]; then
+      echo "DRYRUN: cp -pr \"$rfile\" \"$outputpath/$opath/$newname\""
+    else
+      cp -pr "$rfile" "$outputpath/$opath/$newname"
+    fi
   else
-    cp -pr "$rfile" "$outputpath/$opath/$ofile"
+    if [[ "$onlydryrun" != "0" ]]; then
+      echo "DRYRUN: cp -pr \"$rfile\" \"$outputpath/$opath/$ofile\""
+    else
+      cp -pr "$rfile" "$outputpath/$opath/$ofile"
+    fi
   fi
 done
